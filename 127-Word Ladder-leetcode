@@ -1,0 +1,42 @@
+class Solution {
+public:
+    int ladderLength(string beginWord, string endWord, vector<string>& wordList) {
+
+        queue<pair<string,int>> q;
+
+        unordered_set<string> st(wordList.begin(),wordList.end()); //convert into set because the seaching in the set is much easier than array n vs logn
+
+        q.push({beginWord,1});
+        st.erase(beginWord);
+
+        while(!q.empty()){
+            string word = q.front().first;
+            int steps = q.front().second;
+            q.pop();
+            
+
+            for(int i=0;i<word.size();i++){
+                char org = word[i];
+                for(char ch = 'a' ; ch<='z';ch++){
+
+                    if(ch==word[i]) continue;
+                    word[i]=ch;
+                   
+                   //if the word exist in the set remove the word from the set and push in queue with 1 steps more
+                    if(st.find(word)!=st.end()){
+                     st.erase(word);
+                     q.push({word,steps+1});
+                     if(word==endWord) return steps+1;
+                     
+                    }
+                }
+                //hat  se aat bat cat dat vpas ana hain 
+                //hat = hbt hct hdt het
+                //ordinal cahr ko vpas dal do
+                word[i]=org;
+            }
+        }
+        return 0;
+        
+    }
+};
